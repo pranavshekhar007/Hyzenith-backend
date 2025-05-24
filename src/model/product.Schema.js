@@ -50,31 +50,12 @@ const productSchema = mongoose.Schema({
   offerPrice: {
     type: Number,
   },
-  ingredients: {
-    type: String,
-  },
-  packOf: {
-    type: Number,
-  },
   numberOfPieces: {
     type: Number,
   },
 
   currency: {
     type: String,
-  },
-
-  saleStartDate: {
-    type: Date,
-  },
-  saleEndDate: {
-    type: Date,
-  },
-  itemWeight: {
-    type: Number,
-  },
-  packageWeight: {
-    type: Number,
   },
   description: {
     type: String,
