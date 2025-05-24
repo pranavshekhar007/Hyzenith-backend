@@ -355,7 +355,7 @@ userController.post("/add-to-cart/:id", auth, async (req, res) => {
 
     if (!productId || !currentUserId) {
       return sendResponse(res, 422, "Failed", {
-        message: "Missing productId or userId!",
+        message: "Missing productId or userId!", 
       });
     }
 
