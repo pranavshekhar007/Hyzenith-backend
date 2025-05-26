@@ -348,7 +348,7 @@ userController.post("/list", async (req, res) => {
   }
 });
 
-userController.post("/add-to-cart/:id", auth, async (req, res) => {
+userController.post("/add-to-cart/:id",  async (req, res) => {
   try {
     const { id: productId } = req.params;
     const { userId: currentUserId } = req.body;
@@ -567,7 +567,7 @@ userController.get("/cart/:userId", auth, async (req, res) => {
   }
 });
 
-userController.post("/add-to-wishlist/:id", auth, async (req, res) => {
+userController.post("/add-to-wishlist/:id",  async (req, res) => {
   try {
     if (!req.params.id) {
       return sendResponse(res, 422, "Failed", {
