@@ -22,10 +22,10 @@ const productSchema = mongoose.Schema({
       ref: "Category",
     },
   ],
-  vendorId: [
+  venderId: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Vendor",
+      ref: "Vender",
     },
   ],
   hsnCode: {
