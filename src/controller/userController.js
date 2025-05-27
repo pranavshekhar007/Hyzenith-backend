@@ -418,10 +418,10 @@ userController.post("/add-to-cart/:id",  async (req, res) => {
       };
       message = "Item added successfully to cart";
     }
+    
+   const updatedUser = await User.findByIdAndUpdate(currentUserId, updateQuery, { new: true });
 
-    await User.findByIdAndUpdate(currentUserId, updateQuery, { new: true });
-
-    sendResponse(res, 200, "Success", { message });
+    sendResponse(res, 200, "Success", { message, data: updatedUser.cartItems });
   } catch (error) {
     console.log(error);
     sendResponse(res, 500, "Failed", {
