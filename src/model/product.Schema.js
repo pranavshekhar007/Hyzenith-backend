@@ -25,7 +25,7 @@ const productSchema = mongoose.Schema({
   venderId: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Vender",
+      ref: "Vendor",
     },
   ],
   hsnCode: {
