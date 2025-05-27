@@ -22,6 +22,12 @@ const productSchema = mongoose.Schema({
       ref: "Category",
     },
   ],
+  vendorId: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Vendor",
+    },
+  ],
   hsnCode: {
     type: Number,
   },

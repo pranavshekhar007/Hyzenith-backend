@@ -430,7 +430,7 @@ userController.post("/add-to-cart/:id",  async (req, res) => {
   }
 });
 
-userController.post("/remove-from-cart/:id", auth, async (req, res) => {
+userController.post("/remove-from-cart/:id", async (req, res) => {
   try {
     const { id: productId } = req.params;
     const { userId: currentUserId } = req.body;
@@ -491,7 +491,7 @@ userController.post("/remove-from-cart/:id", auth, async (req, res) => {
   }
 });
 
-userController.get("/cart/:userId", auth, async (req, res) => {
+userController.get("/cart/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
 
@@ -614,7 +614,7 @@ userController.post("/add-to-wishlist/:id",  async (req, res) => {
   }
 });
 
-userController.get("/wishlist/:userId", auth, async (req, res) => {
+userController.get("/wishlist/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
 
@@ -646,7 +646,6 @@ userController.get("/wishlist/:userId", auth, async (req, res) => {
 
 userController.put(
   "/update",
-  auth,
   upload.single("profilePic"),
   async (req, res) => {
     try {

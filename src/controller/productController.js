@@ -53,6 +53,7 @@ productController.post("/list", async (req, res) => {
 
     // Fetch the category list
     const productList = await Product.find(query)
+      .populate("vendorId")
       .populate("categoryId")
       .sort(sortOption)
       .limit(parseInt(pageCount))
