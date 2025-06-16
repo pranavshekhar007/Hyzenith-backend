@@ -53,7 +53,7 @@ comboProductController.post("/list", async (req, res) => {
 
     // Fetch the combo product list
     const comboProductList = await ComboProduct.find(query)
-      .populate("productId")
+      .populate("productList.productId")
       .sort(sortOption)
       .limit(parseInt(pageCount))
       .skip(parseInt(pageNo - 1) * parseInt(pageCount));

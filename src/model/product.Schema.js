@@ -31,10 +31,10 @@ const productSchema = mongoose.Schema({
   hsnCode: {
     type: Number,
   },
-  GTIN: {
-    type: Number,
+  productApperence: {
+    type: String,
   },
-
+  
   shortDescription: {
     type: String,
   },
@@ -98,6 +98,9 @@ const productSchema = mongoose.Schema({
   status: {
     type: Boolean,
     default: true,
+  },
+  rating: {
+    type: String,
   },
 });
 

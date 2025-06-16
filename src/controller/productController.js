@@ -2,6 +2,7 @@ const express = require("express");
 const { sendResponse } = require("../utils/common");
 require("dotenv").config();
 const Product = require("../model/product.Schema");
+const Rating = require("../model/productRating.Schema");
 const productController = express.Router();
 const cloudinary = require("../utils/cloudinary");
 const upload = require("../utils/multer");
@@ -43,25 +44,56 @@ productController.post("/list", async (req, res) => {
     } = req.body;
 
     const matchStage = {};
-    if (status !== undefined) matchStage.status = status;
+    if (status) matchStage.status = status;
     if (searchKey) matchStage.name = { $regex: searchKey, $options: "i" };
 
     const sortField = sortByField || "createdAt";
     const sortOrder = sortByOrder === "asc" ? 1 : -1;
 
     const aggregatePipeline = [
-      {
-        $lookup: {
-          from: "vendors", // vendors collection ka naam (lowercase + plural)
-          localField: "venderId",
-          foreignField: "_id",
-          as: "venderDetails",
-        },
-      },
-      {
-        $match: matchStage,
-      },
-    ];
+  {
+    $lookup: {
+      from: "vendors",
+      localField: "venderId",
+      foreignField: "_id",
+      as: "venderDetails",
+    },
+  },
+  {
+    $lookup: {
+      from: "categories",
+      localField: "categoryId",
+      foreignField: "_id",
+      as: "categoryDetails",
+    },
+  },
+  {
+    $match: matchStage,
+  },
+];
+
+// pincode filter lagana ho toh
+if (pincode) {
+  aggregatePipeline.push({
+    $match: {
+      "venderDetails.pincode": pincode,
+    },
+  });
+}
+
+// Sorting
+aggregatePipeline.push({
+  $sort: {
+    [sortField]: sortOrder,
+  },
+});
+
+// Pagination
+aggregatePipeline.push(
+  { $skip: (parseInt(pageNo) - 1) * parseInt(pageCount) },
+  { $limit: parseInt(pageCount) }
+);
+
 
     // pincode filter lagana ho toh
     if (pincode) {
@@ -242,11 +274,18 @@ productController.delete("/delete/:id", async (req, res) => {
 productController.get("/details/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const product = await Product.findOne({ _id: id });
+    const product = await Product.findOne({ _id: id }) .populate("categoryId")
+    // .populate("subCategoryId")
+     .populate("brandId")
+    // .populate("zipcodeId");
+    const ratingList = await Rating.find({productId:id})
+          .populate({
+            path: "userId",
+          })
     if (product) {
       return sendResponse(res, 200, "Success", {
         message: "Product details fetched  successfully",
-        data: product,
+        data: {product, ratingList},
         statusCode: 200,
       });
     } else {

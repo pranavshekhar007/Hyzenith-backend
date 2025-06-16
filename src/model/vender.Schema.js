@@ -28,6 +28,9 @@ const venderSchema = mongoose.Schema({
   pincode: {
     type: String,
   },
+  GTIN: {
+    type: Number,
+  },
 });
 
 venderSchema.plugin(timestamps);

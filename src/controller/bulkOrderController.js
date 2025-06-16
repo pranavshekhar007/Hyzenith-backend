@@ -28,18 +28,6 @@ bulkOrderController.post(
         obj = { ...req.body, image: image.url };
       }
       const bulkOrderCreated = await BulkOrder.create(obj);
-    //   sendNotification(
-    //     {
-    //       icon: CategoryCreated?.image,
-    //       title: ` has re-uploaded the details`,
-    //       subTitle: ` has re-uploaded the details`,
-    //       notifyUserId: "Admin",
-    //       category: "Driver",
-    //       subCategory: "Profile update",
-    //       notifyUser: "Admin",
-    //     },
-    //     req.io
-    //   );
       sendResponse(res, 200, "Success", {
         message: "Bulk order created successfully!",
         data: bulkOrderCreated,
